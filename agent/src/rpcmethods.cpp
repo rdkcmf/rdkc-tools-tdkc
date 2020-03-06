@@ -174,32 +174,6 @@ std::string GetInterfaceIP(char* interfaceName)
     return std::string(ipAddress);
 }
 
-/* This function is to post the JSON request to other side in case of multiprocessor platform */
-void RpcMethods::RedirectJsonRequest (const Json::Value& request, Json::Value& response, std::string method)
-{
-        DEBUG_PRINT (DEBUG_LOG, "\nRedirectJsonRequest:: Entry\n");
-
-        cout << "Received query: \n" << request << endl;
-
-        std::string ipAddress;
-        ipAddress = GetInterfaceIP(GET_ATOM_ARP_IP);
-
-        TcpSocketClient client(ipAddress,LOCAL_PORT);
-        Client c(client);
-
-        DEBUG_PRINT (DEBUG_LOG, "\nRedirectJsonRequest:: Method Requested:%s\n",method.c_str());
-        DEBUG_PRINT (DEBUG_LOG, "\nRedirectJsonRequest:: IPAddress:%s\n",ipAddress.c_str());
-
-        try {
-               response = c.CallMethod(method,request);
-               cout<< "Received response \n" <<response <<endl;
-        } catch (JsonRpcException &e) {
-        cerr << e.what() << endl;
-        }
-
-        DEBUG_PRINT (DEBUG_LOG, "\nRedirectJsonRequest:: Exit\n");
-}
-
 void *Createstubserver (void *modulename)
 {
     DEBUG_PRINT (DEBUG_TRACE, "\nStarting Stub server.....\n");
@@ -902,13 +876,6 @@ void RpcMethods::RPCLoadModule (const Json::Value& request, Json::Value& respons
     const char* pszModuleName = NULL;
     pszModuleName = request ["param1"].asCString();
 
-    /* Redirect the JSON request to the ATOM side for WIFI HAL test scripts */
-    if((REDIRECT_FLAG == 1) && (!strcmp(pszModuleName, "wifihal")))
-    {
-        RedirectJsonRequest(request,response,"loadModule");
-    }
-    else
-    {
     bool bRet = true;
 
     std::string strFilePath;
@@ -1086,7 +1053,6 @@ void RpcMethods::RPCLoadModule (const Json::Value& request, Json::Value& respons
 
     DEBUG_PRINT (DEBUG_LOG, "\nRPC Load Module --> Exit \n");
 
-    }
     return;
 
 } /* End of RPCLoadModule */
@@ -1111,13 +1077,6 @@ void RpcMethods::RPCUnloadModule (const Json::Value& request, Json::Value& respo
     const char* pszModuleName = NULL;
     pszModuleName = request ["param1"].asCString();
 
-    /* Redirect the JSON request to the ATOM side for WIFI HAL test scripts */
-    if((REDIRECT_FLAG == 1) && (!strcmp(pszModuleName, "wifihal")))
-    {
-        RedirectJsonRequest(request,response,"unloadModule");
-    }
-    else
-    {
     bool bRet = true;
     void* pvHandle = NULL;
     const char* pszScriptSuiteEnabled;
@@ -1184,7 +1143,6 @@ void RpcMethods::RPCUnloadModule (const Json::Value& request, Json::Value& respo
     }
     b_stubServerFlag=false;
 
-    }
     return;
 
 } /* End of RPCUnloadModule */
@@ -2560,13 +2518,6 @@ void RpcMethods::RPCExecuteTestCase(const Json::Value& request, Json::Value& res
 {
     const char* libname = request["module"].asCString();
 
-    /* Redirect the JSON request to the ATOM side for WIFI HAL test scripts */
-    if((REDIRECT_FLAG == 1) && (!strcmp(libname, "wifihal")))
-    {
-        RedirectJsonRequest(request,response,"executeTestCase");
-    }
-    else
-    {
     bool bRet = true;
     int nReturnValue = 0;
     char szCommand[COMMAND_SIZE];
@@ -2615,7 +2566,6 @@ void RpcMethods::RPCExecuteTestCase(const Json::Value& request, Json::Value& res
     cout<< "Received response \n" <<response <<endl;
     response["result"]=response["result"];
 
-   }
    return ;
 
 }/* End of RPCEnableTDK */
