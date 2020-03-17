@@ -60,6 +60,7 @@ AC_SUBST(CONFIG_PREFIX)
 AC_SUBST(RDK_VERSION)
 AC_CONFIG_FILES([Makefile
 	 agent/Makefile
+         SystemUtil_tdkc_stub/Makefile
          ])
 AC_OUTPUT
 

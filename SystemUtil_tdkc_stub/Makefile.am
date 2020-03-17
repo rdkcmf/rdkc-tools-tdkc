@@ -16,8 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
+ACLOCAL_AMFLAGS = -Im4 --install
+AM_CPPFLAGS = -c ${COPTS} -fPIC
+INCLUDES = -I${PKG_CONFIG_SYSROOT_DIR}$(includedir)
+AM_CXXFLAGS = -I${top_srcdir}/SystemUtil_tdkc_stub/include -I${top_srcdir}/agent/include
+lib_LTLIBRARIES = libsystemutil_tdkcstub.la
+libsystemutil_tdkcstub_la_SOURCES = src/SystemUtil_tdkc_stub.cpp
+libsystemutil_tdkcstub_la_includedir = ${includedir}
+libsystemutil_tdkcstub_la_include_HEADERS = ${top_srcdir}/SystemUtil_tdkc_stub/include/SystemUtil_tdkc_stub.h
 
-SUBDIRS = agent SystemUtil_tdkc_stub
-DIST_SUBDIRS = @SUBDIRS@
-
-distcleancheck_listfiles = *-libtool
