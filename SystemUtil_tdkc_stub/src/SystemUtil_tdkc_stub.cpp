@@ -65,7 +65,7 @@ void SystemUtilAgent::SystemUtilAgent_ExecuteCmd(IN const Json::Value& req, OUT 
 	string cmd = req["command"].asCString();
 	DEBUG_PRINT(DEBUG_TRACE, "Command going to be executed : %s\n",cmd.c_str());
 
-	fp = popen(path.c_str(),"r");
+	fp = popen(cmd.c_str(),"r");
 	/*Check for popen failure and get the command output*/
 	if(fp == NULL)
 	{
