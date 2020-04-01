@@ -83,6 +83,7 @@
 '''
 # use tdklib library,which provides a wrapper for tdk testcase script
 import tdklib;
+import time;
 import tdkcConfigParserUtility;
 from tdkcConfigParserUtility import *;
 
@@ -132,6 +133,7 @@ if "SUCCESS" in result.upper() :
         #Reboot
         obj.initiateReboot();
 
+        time.sleep(5);
         print "\nTEST STEP 2 : To get wifi connection status using ifconfig command"
         print "EXPECTED RESULT : wifi connection status should be obtained"
         tdkTestObj = obj.createTestStep('ExecuteCmd_TDKC');

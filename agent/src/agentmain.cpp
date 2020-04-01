@@ -1070,9 +1070,9 @@ int main(int argc, char **argv)
     strFolderPath.append(strEnvPath);
     strFolderPath.append("/");
     RpcMethods::sm_strTDKPath = strFolderPath;
-    strEnvPath = getenv ("TDK_LOGGER_PATH");
-    strFolderPath.append(strEnvPath);
+    strFolderPath.append("logs");
     RpcMethods::sm_strLogFolderPath = strFolderPath;
+    RpcMethods::sm_strLogFolderPath.append("/");
 
     /* Creating logs directory */
     nReturnValue = mkdir (strFolderPath.c_str(), 0777);
