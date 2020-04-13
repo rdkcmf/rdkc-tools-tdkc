@@ -23,7 +23,7 @@
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
   <version>4</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>sysutil_IsEvoStreammsActive</name>
+  <name>sysutil_IsRDKCMediaserverActive</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
   <primitive_test_id></primitive_test_id>
   <!-- Do not change primitive_test_id if you are editing an existing script. -->
@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>Test script to check whether evostreamms process is running or not</synopsis>
+  <synopsis>Test script to check whether rdkcmediaserver process is running or not</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -57,21 +57,21 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_sysutil_02</test_case_id>
-    <test_objective>Test script to check whether evostreamms is running or not</test_objective>
+    <test_objective>Test script to check whether rdkcmediaserver is running or not</test_objective>
     <test_type>Positive</test_type>
     <test_setup>RPI-RDKC</test_setup>
     <pre_requisite>TDK agent should be running in the device and device should be online in Test Manager.</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
     <input_parameters>None</input_parameters>
     <automation_approch>1.Load the systemutil_tdkc module.
-2.If the load module status is success, check whether evostreamms process is running or not.
-3.Invoke ExecuteCmd function to execute the command "ps -Af | grep evostreamms | grep -v grep"
-4.From the command output, check whether evostreamms process is listed. If the process is listed, it indicates that evostreamms process is active
-5.Update the test result as success / failure based on evostreamms process active status</automation_approch>
-    <expected_output>ps command should list the details of evostreamms</expected_output>
+2.If the load module status is success, check whether rdkcmediaserver process is running or not.
+3.Invoke ExecuteCmd function to execute the command "ps -Af | grep rdkcmediaserver | grep -v grep"
+4.From the command output, check whether rdkcmediaserver process is listed. If the process is listed, it indicates that rdkcmediaserver process is active
+5.Update the test result as success / failure based on rdkcmediaserver process active status</automation_approch>
+    <expected_output>ps command should list the details of rdkcmediaserver</expected_output>
     <priority>High</priority>
     <test_stub_interface>systemutil_tdkc</test_stub_interface>
-    <test_script>sysutil_IsEvoStreammsActive</test_script>
+    <test_script>sysutil_IsRDKCMediaserverActive</test_script>
     <skipped>No</skipped>
     <release_version>M75</release_version>
     <remarks></remarks>
@@ -89,7 +89,7 @@ obj = tdklib.TDKScriptingLibrary("systemutil_tdkc","1");
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'sysutil_IsEvoStreammsActive');
+obj.configureTestCase(ip,port,'sysutil_IsRDKCMediaserverActive');
 
 #Get the result of connection with test component and RDKC
 result =obj.getLoadModuleResult();
@@ -98,10 +98,10 @@ print "[LIB LOAD STATUS]  :  %s" %result;
 if "SUCCESS" in result.upper() :
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS"
-    print "\nTEST STEP 1 : To check whether evostreamms binary is running or not"
-    print "EXPECTED RESULT : Should get evostreamms entry in ps command"
+    print "\nTEST STEP 1 : To check whether rdkcmediaserver binary is running or not"
+    print "EXPECTED RESULT : Should get rdkcmediaserver entry in ps command"
     tdkTestObj = obj.createTestStep('ExecuteCmd_TDKC');
-    cmd = "ps -Af | grep evostreamms | grep -v grep"
+    cmd = "ps -Af | grep rdkcmediaserver | grep -v grep"
     print "Command to be executed : %s" %(cmd)
     tdkTestObj.addParameter("command", cmd);
     tdkTestObj.executeTestCase(expectedresult);
@@ -109,21 +109,21 @@ if "SUCCESS" in result.upper() :
     if expectedresult in actualresult:
         cmdOutput = tdkTestObj.getResultDetails();
         cmdOutput = cmdOutput.replace('\\n',"");
-        print "ACTUAL RESULT  : Command Execution to check evostreamms binary active status success"
+        print "ACTUAL RESULT  : Command Execution to check rdkcmediaserver binary active status success"
         print "Value Returned : %s\n" %(cmdOutput)
 
-        print "TEST STEP 2 : To check whether evostreamms listed in ps command output"
-        print "EXPECTED RESULT : evostreamms binary should be listed"
-        if "evostreamms" in cmdOutput.strip(" "):
-            print "ACTUAL RESULT   : Evostreamms binary is running"
+        print "TEST STEP 2 : To check whether rdkcmediaserver listed in ps command output"
+        print "EXPECTED RESULT : rdkcmediaserver binary should be listed"
+        if "rdkcmediaserver" in cmdOutput.strip(" "):
+            print "ACTUAL RESULT   : rdkcmediaserver binary is running"
             print "[TEST EXECUTION RESULT] : SUCCESS\n"
             tdkTestObj.setResultStatus("SUCCESS");
         else:
-            print "ACTUAL RESULT   :Evostreamms binary not running"
+            print "ACTUAL RESULT   :rdkcmediaserver binary not running"
             print "[TEST EXECUTION RESULT] : FAILURE\n"
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "ACTUAL RESULT  : Command execution to check evostreamms binary active status Failed"
+        print "ACTUAL RESULT  : Command execution to check rdkcmediaserver binary active status Failed"
         print "Value Returned : %s\n" %(cmdOutput)
         tdkTestObj.setResultStatus("FAILURE");
 
@@ -131,6 +131,5 @@ if "SUCCESS" in result.upper() :
 else:
     print "Failed to load the module";
     obj.setLoadModuleStatus("FAILURE");
-
 
 
