@@ -87,6 +87,19 @@ void SystemUtilAgent::SystemUtilAgent_ExecuteCmd(IN const Json::Value& req, OUT 
 	DEBUG_PRINT(DEBUG_TRACE, "SystemUtilAgent_ExecuteCmd -->Exit\n");
 	return;
 }
+/**************************************************************************
+Function name : SystemUtilAgent::SystemUtilAgent_BasicFunction
+Arguments     : Input arguments are json request object and json response object
+Description   : This method is added for dummy function invocation.
+***************************************************************************/
+void SystemUtilAgent::SystemUtilAgent_BasicFunction(IN const Json::Value& req, OUT Json::Value& response)
+{
+        DEBUG_PRINT(DEBUG_TRACE, "SystemUtilAgent_BasicFunction ---> Entry\n");
+        response["result"] = "SUCCESS";
+        response["details"] = "SUCCESS";
+        DEBUG_PRINT(DEBUG_TRACE, "SystemUtilAgent_BasicFunction ---> Exit\n");
+        return;
+}
 
 /**************************************************************************
 Function Name   : CreateObject

@@ -42,6 +42,7 @@ class SystemUtilAgent : public RDKTestStubInterface, public AbstractServer<Syste
                SystemUtilAgent(TcpSocketServer &ptrRpcServer) : AbstractServer <SystemUtilAgent>(ptrRpcServer)
                {
                    this->bindAndAddMethod(Procedure("TestMgr_ExecuteCmd", PARAMS_BY_NAME, JSON_STRING,"command",JSON_STRING,NULL), &SystemUtilAgent::SystemUtilAgent_ExecuteCmd);
+                   this->bindAndAddMethod(Procedure("TestMgr_BasicFunction", PARAMS_BY_NAME, JSON_STRING,NULL), &SystemUtilAgent::SystemUtilAgent_BasicFunction);
                }
                 /*Inherited functions*/
                 bool initialize(IN const char* szVersion);
@@ -49,6 +50,7 @@ class SystemUtilAgent : public RDKTestStubInterface, public AbstractServer<Syste
 		std::string testmodulepre_requisites();
 		bool testmodulepost_requisites();
 		void SystemUtilAgent_ExecuteCmd(IN const Json::Value& req, OUT Json::Value& response);
+                void SystemUtilAgent_BasicFunction(IN const Json::Value& req, OUT Json::Value& response);
 };
 #endif
 
