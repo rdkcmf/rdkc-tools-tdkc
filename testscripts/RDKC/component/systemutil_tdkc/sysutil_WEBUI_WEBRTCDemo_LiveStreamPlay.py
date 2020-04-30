@@ -75,6 +75,8 @@ import tdkcConfigParserUtility;
 from tdkcConfigParserUtility import *;
 import tdkcWEBUIUtility
 from tdkcWEBUIUtility import *
+from tdkcUtility import *;
+import tdkcUtility
 
 #Test component to be tested
 obj = tdklib.TDKScriptingLibrary("systemutil_tdkc","1");
@@ -103,18 +105,18 @@ if "SUCCESS" in result.upper() :
     camStreamStatus = "FALSE"
 
     #Setting pre-requisites : configuration for wifi-connection
-    wifiConfStatus = tdkcRMSUtility.updateWIFIConf(obj,ssid,psk)
+    wifiConfStatus = tdkcUtility.updateWIFIConf(obj,ssid,psk)
 
     #Setting pre-requisites : configuration for rms
-    rmsConfStatus  = tdkcRMSUtility.updateRMSConf(obj);
+    rmsConfStatus  = tdkcUtility.updateRMSConf(obj);
 
     #Reboot the device and check wifi and camera streaming status
     if expectedresult in wifiConfStatus and expectedresult in rmsConfStatus:
         #Reboot
         obj.initiateReboot();
         time.sleep(120);
-        wifiConnStatus  = tdkcRMSUtility.isConnectedToWIFI(obj)
-        camStreamStatus = tdkcRMSUtility.isCameraStreaming(obj)
+        wifiConnStatus  = tdkcUtility.isConnectedToWIFI(obj)
+        camStreamStatus = tdkcUtility.isCameraStreaming(obj)
 
     #Launch WEBRTC Demo page and play video stream
     if wifiConnStatus == "TRUE" and camStreamStatus == "TRUE":
@@ -129,7 +131,7 @@ if "SUCCESS" in result.upper() :
             tdkTestObj.setResultStatus("SUCCESS");
             print "ACTUAL RESULT : selenium Hub & Node started , URL opened in browser successfully\n"
 
-            status = tdkcRMSUtility.updateWEBRTCDemoPage(driver);
+            status = tdkcUtility.updateWEBRTCDemoPage(driver);
             if status == "SUCCESS":
                 tdkTestObj.setResultStatus("SUCCESS");
                 print "\nTEST STEP : Start playing video stream by clicking the play button in UI"
@@ -197,8 +199,8 @@ if "SUCCESS" in result.upper() :
 
     #Setting post-requisite : disconnect wifi & revert rms conf
     if expectedresult in wifiConfStatus and expectedresult in rmsConfStatus:
-        revertWIFIConfStatus = tdkcRMSUtility.revertWIFIConf(obj);
-        revertRMSConfStatus  = tdkcRMSUtility.revertRMSConf(obj);
+        revertWIFIConfStatus = tdkcUtility.revertWIFIConf(obj);
+        revertRMSConfStatus  = tdkcUtility.revertRMSConf(obj);
 
         if expectedresult in revertWIFIConfStatus and expectedresult in revertRMSConfStatus:
             print "Rebooting the device to reset the network connections & rms conf ..."
