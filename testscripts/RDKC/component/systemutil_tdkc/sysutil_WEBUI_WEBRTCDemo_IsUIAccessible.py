@@ -117,16 +117,17 @@ if "SUCCESS" in result.upper() :
     UICheckData   = tdkcConfigParserUtility.UICheckData
     driver,status = tdkcWEBUIUtility.startSeleniumGrid(tdkTestObj,webrtcDemoURL,UICheckXpath,UICheckData,"NoLogin");
     if status == "SUCCESS":
-        time.sleep(10);
-        driver.quit();
         tdkTestObj.setResultStatus("SUCCESS");
         print "ACTUAL RESULT : selenium Hub & Node started , WEBRTC demo URL is accessible & opened in browser successfully"
         print "[TEST EXECUTION RESULT] : SUCCESS\n"
 
+        #Kill web-driver
+        driverQuitStatus = tdkcWEBUIUtility.kill_web_driver(driver);
+
         #Kill selenium hub and node
         print "Kill selenium hub and node"
         status = tdkcWEBUIUtility.kill_hub_node()
-        if status == "SUCCESS":
+        if "SUCCESS" in status and driverQuitStatus == "SUCCESS":
             tdkTestObj.setResultStatus("SUCCESS");
             print "SUCCESS: WebUI post-requisite set successfully\n"
         else:

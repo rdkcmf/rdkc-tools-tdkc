@@ -182,11 +182,13 @@ if "SUCCESS" in result.upper() :
             else:
                 tdkTestObj.setResultStatus("FAILURE");
 
-            driver.quit();
+            #kill web-driver
+            driverQuitStatus = tdkcWEBUIUtility.kill_web_driver(driver)
+
             #Kill selenium hub and node
             print "Kill selenium hub and node"
             status = tdkcWEBUIUtility.kill_hub_node()
-            if status == "SUCCESS":
+            if "SUCCESS" in status and driverQuitStatus == "SUCCESS":
                 tdkTestObj.setResultStatus("SUCCESS");
                 print "SUCCESS: WebUI post-requisite set successfully\n"
             else:

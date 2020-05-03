@@ -209,17 +209,20 @@ if "SUCCESS" in result.upper() :
                 else:
                     tdkTestObj.setResultStatus("FAILURE");
 
-                driver2.quit();
+                driver2QuitStatus = tdkcWEBUIUtility.kill_web_driver(driver2);
             else:
+                driver2QuitStatus = "SUCCESS"
                 tdkTestObj.setResultStatus("FAILURE");
                 print "Failed to set selenium grid and launch the WEBRTC Demo URL in browser2"
                 print "[TEST EXECUTION RESULT ] : FAILURE\n"
 
-            driver1.quit();
+            #Kill web-driver
+            driver1QuitStatus = tdkcWEBUIUtility.kill_web_driver(driver1);
+
             #Kill selenium hub and node
             print "Kill selenium hub and node"
             status = tdkcWEBUIUtility.kill_hub_node()
-            if status == "SUCCESS":
+            if "SUCCESS" in status and driver1QuitStatus == "SUCCESS" and driver2QuitStatus == "SUCCESS":
                 tdkTestObj.setResultStatus("SUCCESS");
                 print "SUCCESS: WebUI post-requisite set successfully\n"
             else:
