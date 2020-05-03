@@ -30,6 +30,7 @@
   <!-- Total functions corresponding module  -->
     <functions>
       <function name='TestMgr_ExecuteCmd' />
+      <function name='TestMgr_BasicFunction' />
     </functions>
   <!-- Total parameters corresponding module  -->
     <parameters>

@@ -23,6 +23,10 @@
           <parameter name='command' value='' />
         </parameters>
       </primitiveTest>
+      <primitiveTest name="BasicFunction_TDKC" id="" version="1">
+        <function>TestMgr_BasicFunction</function>
+        <parameters/>
+      </primitiveTest>
     </primitiveTests>
   </module>
 </xml>
