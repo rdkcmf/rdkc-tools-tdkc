@@ -85,8 +85,7 @@
 import tdklib;
 import tdkcConfigParserUtility;
 from tdkcConfigParserUtility import *;
-import tdkcWEBUIUtility
-from tdkcWEBUIUtility import *
+import time
  
 
 #Test component to be tested
