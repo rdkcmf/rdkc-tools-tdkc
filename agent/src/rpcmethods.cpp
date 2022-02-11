@@ -1200,6 +1200,8 @@ void RpcMethods::RPCEnableReboot (const Json::Value& request, Json::Value& respo
 
     DEBUG_PRINT (DEBUG_LOG, "\nGoing to enable box Reboot \n");
 
+    int count = 0;
+    int map_size = 0;
     bool bRet = true;
     std::string strFilePath;
     char szLibName [LIB_NAME_SIZE];
@@ -1222,9 +1224,10 @@ void RpcMethods::RPCEnableReboot (const Json::Value& request, Json::Value& respo
     /* Iterate over the map to find out currently loaded modules and unload the same */
 
     sModuleDetails o_ModuleDetails;
+    map_size = o_gModuleMap.size();
 
     /* Parse through module map to find the module */
-    for (o_gModuleMapIter = o_gModuleMap.begin(); o_gModuleMapIter != o_gModuleMap.end(); o_gModuleMapIter ++ )
+    for (o_gModuleMapIter = o_gModuleMap.begin(),count = 0; count < map_size ; o_gModuleMapIter ++,count++ )
     {
         o_ModuleDetails = o_gModuleMapIter -> second;
         sprintf (szLibName, "%s", o_ModuleDetails.strModuleName.c_str());

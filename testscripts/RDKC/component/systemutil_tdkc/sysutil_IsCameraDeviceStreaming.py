@@ -132,7 +132,7 @@ if "SUCCESS" in result.upper() :
         expectedresult = "SUCCESS"
         data1 = "gst_InitFrame SUCCESS"
         data2 = "Inbound connection accepted"
-        cmd = "awk '/" + data1 + "/{init=$0;next} /" + data2 + "/{print init \"\\n\" $0}' /opt/logs/rms.*.log"
+        cmd = "awk '/" + data1 + "/{init=$0;next} /" + data2 + "/{print init \"\\n\" $0;exit}' /opt/logs/rms.*.log"
         print "Command to be executed : %s" %(cmd)
         tdkTestObj.addParameter("command", cmd);
         tdkTestObj.executeTestCase(expectedresult);
