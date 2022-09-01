@@ -23,7 +23,7 @@
   <!-- Do not edit id. This will be auto filled while exporting. If you are adding a new script keep the id empty -->
   <version>4</version>
   <!-- Do not edit version. This will be auto incremented while updating. If you are adding a new script you can keep the vresion as 1 -->
-  <name>sysutil_IsMediaStreamerActive</name>
+  <name>sysutil_IsPipewireActive</name>
   <!-- If you are adding a new script you can specify the script name. Script Name should be unique same as this file name with out .py extension -->
   <primitive_test_id></primitive_test_id>
   <!-- Do not change primitive_test_id if you are editing an existing script. -->
@@ -33,7 +33,7 @@
   <!--  -->
   <status>FREE</status>
   <!--  -->
-  <synopsis>Test script to check whether mediastreamer is running or not</synopsis>
+  <synopsis>Test script to check whether pipewire is running or not</synopsis>
   <!--  -->
   <groups_id />
   <!--  -->
@@ -57,21 +57,21 @@
   </rdk_versions>
   <test_cases>
     <test_case_id>TC_sysutil_03</test_case_id>
-    <test_objective>Test script to check whether mediastreamer is running or not</test_objective>
+    <test_objective>Test script to check whether pipewire is running or not</test_objective>
     <test_type>Positive</test_type>
     <test_setup>RPI-RDKC</test_setup>
     <pre_requisite>TDK agent should be running in the device and device should be online in Test Manager.</pre_requisite>
     <api_or_interface_used>None</api_or_interface_used>
     <input_parameters>None</input_parameters>
     <automation_approch>1.Load the systemutil_tdkc module.
-2.If the load module status is success, check whether mediastreamer process is running or not.
-3.Invoke ExecuteCmd function to execute the command "ps -Af | grep mediastreamer | grep -v grep"
-4.From the command output, check whether mediastreamer process is listed. If the process is listed, it indicates that mediastreamer process is active
-5.Update the test result as success / failure based on mediastreamer process active status</automation_approch>
-    <expected_output>ps command should list the details of mediastreamer</expected_output>
+2.If the load module status is success, check whether pipewire process is running or not.
+3.Invoke ExecuteCmd function to execute the command "ps -Af | grep pip | grep -v grep"
+4.From the command output, check whether pipewire process is listed. If the process is listed, it indicates that pipewire process is active
+5.Update the test result as success / failure based on pipewire process active status</automation_approch>
+    <expected_output>ps command should list the details of pipewire</expected_output>
     <priority>High</priority>
     <test_stub_interface>systemutil_tdkc</test_stub_interface>
-    <test_script>sysutil_IsMediaStreamerActive</test_script>
+    <test_script>sysutil_IsPipewireActive</test_script>
     <skipped>No</skipped>
     <release_version>M75</release_version>
     <remarks></remarks>
@@ -89,7 +89,7 @@ obj = tdklib.TDKScriptingLibrary("systemutil_tdkc","1");
 #This will be replaced with correspoing Box Ip and port while executing script
 ip = <ipaddress>
 port = <port>
-obj.configureTestCase(ip,port,'sysutil_IsMediaStreamerActive');
+obj.configureTestCase(ip,port,'sysutil_IsPipewireActive');
 
 #Get the result of connection with test component and RDKC
 result =obj.getLoadModuleResult();
@@ -98,10 +98,10 @@ print "[LIB LOAD STATUS]  :  %s" %result;
 if "SUCCESS" in result.upper() :
     obj.setLoadModuleStatus("SUCCESS");
     expectedresult = "SUCCESS"
-    print "\nTEST STEP 1 : To check whether mediastreamer binary is running or not"
-    print "EXPECTED RESULT : Should get mediastreamer entry in ps command"
+    print "\nTEST STEP 1 : To check whether pipewire binary is running or not"
+    print "EXPECTED RESULT : Should get pipewire entry in ps command"
     tdkTestObj = obj.createTestStep('ExecuteCmd_TDKC');
-    cmd = "ps -Af | grep mediastreamer | grep -v grep"
+    cmd = "ps -Af | grep pip | grep -v grep"
     print "Command to be executed : %s" %(cmd)
     tdkTestObj.addParameter("command", cmd);
     tdkTestObj.executeTestCase(expectedresult);
@@ -109,21 +109,21 @@ if "SUCCESS" in result.upper() :
     if expectedresult in actualresult:
         cmdOutput = tdkTestObj.getResultDetails();
         cmdOutput = cmdOutput.replace('\\n',"");
-        print "ACTUAL RESULT  : Command Execution to check mediastreamer binary active status success"
+        print "ACTUAL RESULT  : Command Execution to check pipewire binary active status success"
         print "Value Returned : %s\n" %(cmdOutput)
 
-        print "TEST STEP 2 : To check whether mediastreamer listed in ps command output"
-        print "EXPECTED RESULT : mediastreamer binary should be listed"
-        if "mediastreamer" in cmdOutput.strip(" "):
-            print "ACTUAL RESULT   : MediaStreamer binary is running"
+        print "TEST STEP 2 : To check whether pipewire listed in ps command output"
+        print "EXPECTED RESULT : pipewire binary should be listed"
+        if "pipewire" in cmdOutput.strip(" "):
+            print "ACTUAL RESULT   : Pipewire binary is running"
             print "[TEST EXECUTION RESULT] : SUCCESS\n"
             tdkTestObj.setResultStatus("SUCCESS");
         else:
-            print "ACTUAL RESULT   : MediaStreamer binary not running"
+            print "ACTUAL RESULT   : Pipewire binary not running"
             print "[TEST EXECUTION RESULT] : FAILURE\n"
             tdkTestObj.setResultStatus("FAILURE");
     else:
-        print "ACTUAL RESULT  : Command execution to check mediastreamer binary active status Failed"
+        print "ACTUAL RESULT  : Command execution to check pipewire binary active status Failed"
         print "Value Returned : %s\n" %(cmdOutput)
         tdkTestObj.setResultStatus("FAILURE");
 
